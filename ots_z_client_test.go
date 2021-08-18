@@ -280,7 +280,8 @@ func TestSearchRequest_Do(t *testing.T) {
 	//
 	t.Log("翻页使用")
 	q2 := queries.TermQuery("garden", 20)
-	searchResponse, err := Client.Table("test").Search("index_x1").Query(q2).Limit(10).Do()
+	searchRequest := Client.Table("test").Search("index_x1").Query(q2).Limit(10)
+	searchResponse, err := searchRequest.Do()
 	if err != nil {
 		t.Log(err.Error())
 		return
@@ -298,7 +299,7 @@ func TestSearchRequest_Do(t *testing.T) {
 	}
 
 	for searchResponse.NextToken != nil {
-		searchResponse, err = Client.Table("test").Search("index_x1").Next(searchResponse.NextToken)
+		searchResponse, err = searchRequest.Next(searchResponse.NextToken)
 		if err != nil {
 			t.Logf("search err: %s", err.Error())
 			return

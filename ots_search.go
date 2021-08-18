@@ -115,17 +115,20 @@ func (c *searchRowsRequest) Do() (*tablestore.SearchResponse, error) {
 	}
 
 	searchRequest := &tablestore.SearchRequest{}
-	searchColumns := &tablestore.ColumnsToGet{}
 	searchRequest.SetTableName(c.tableName)
 	searchRequest.SetIndexName(c.indexName)
-	searchQuery := search.NewSearchQuery()
+
+	searchColumns := &tablestore.ColumnsToGet{}
 	if len(c.columns) > 0 {
 		searchColumns.Columns = c.columns
 		searchColumns.ReturnAll = false
 	} else {
 		searchColumns.ReturnAll = true
 	}
+	searchRequest.SetColumnsToGet(searchColumns)
 
+	searchQuery := search.NewSearchQuery()
+	searchQuery.SetGetTotalCount(true)
 	if len(c.nextToken) > 0 {
 		searchQuery.SetToken(c.nextToken)
 	} else {
@@ -143,8 +146,6 @@ func (c *searchRowsRequest) Do() (*tablestore.SearchResponse, error) {
 		searchQuery.SetQuery(c.query)
 	}
 	searchRequest.SetSearchQuery(searchQuery)
-	searchQuery.SetGetTotalCount(true)
-	searchRequest.SetColumnsToGet(searchColumns)
 
 	res, err := c.dwSearchOrm.client.Search(searchRequest)
 	if err != nil {
