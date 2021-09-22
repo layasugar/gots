@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/aliyun/aliyun-tablestore-go-sdk/tablestore"
 	"github.com/aliyun/aliyun-tablestore-go-sdk/tablestore/search"
-	"github.com/layasugar/otsorm-go/queries"
+	"github.com/layasugar/gots/queries"
 	"strings"
 )
 

@@ -3,7 +3,7 @@ package gots
 import (
 	"encoding/json"
 	"errors"
-	"github.com/layasugar/otsorm-go/queries"
+	"github.com/layasugar/gots/queries"
 	"testing"
 )
 

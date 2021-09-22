@@ -1,4 +1,4 @@
-module github.com/layasugar/otsorm-go
+module github.com/layasugar/gots
 
 go 1.17
 
